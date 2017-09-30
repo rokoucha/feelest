@@ -14,7 +14,7 @@ def get_articles(config):
 
     articles = []
 
-    for rowt in list(db.execute("select * from articles")):
+    for rowt in list(db.execute("select * from articles order by unixtime DESC")):
         row = dict(rowt)
         row["date"] = datetime.fromtimestamp(row["unixtime"]).strftime(time_format)
         row["url"] = url + "/article/" + str(row["id"])
