@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for article in articles %}
+
+<div class="post-preview">
+    <a href="{{article.url}}">
+        <h2 class="post-title">
+            {{article.title}}
+        </h2>
+        <h3 class="post-subtitle">
+            {{article.discription}}
+        </h3>
+    </a>
+    <p class="post-meta">Posted by
+        <a href="#">{{article.author}}</a>
+    on {{article.date}}</p>
+</div>
+<hr>
+
+{% endfor %}
+
+<!-- Pager -->
+<div class="clearfix">
+    <a class="btn btn-secondary float-right" href="#">Older Posts &rarr;</a>
+</div>
+
+{% endblock %}

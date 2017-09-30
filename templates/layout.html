@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="{{blog.html_lang}}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		{% if is_article %}
+		<meta property="og:title" content="{{article.title}}">
+		<meta property="og:type" content="article">
+		<meta property="og:description" content="{{article.discription}}}" >
+		<meta property="og:url" content="{{article.url}}">
+		{% else %}
+		<meta property="og:title" content="{{blog.name}}">
+		<meta property="og:type" content="blog">
+		<meta property="og:description" content="{{blog.discription}}}" >
+		<meta property="og:url" content="{{blog.url}}">
+		{% endif %}
+		<meta property="og:site.name" content="{{blog.name}}">
+		<meta property="og:image" content="{{blog.favicon}}">
+		<meta property="og:locale" content="{{blog.lang}}">
+		{% if is_article %}
+		<title>{{ article.title }} - {{blog.name}}</title>
+		{% else %}
+		<title>{{blog.name}}</title>
+		{% endif %}
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		<link rel="stylesheet" href="static/css/clean-blog.min.css">
+
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+			<div class="container">
+				<a class="navbar-brand" href="index.html">{{blog.name}}</a>
+				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				Menu
+				<i class="fa fa-bars"></i>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="{{blog.homepage_url}}">{{blog.homepage}}</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{blog.login_url}}">Manage</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<header class="masthead" style="background-image: url('static/img/bg.jpg')">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-md-10 mx-auto">
+						<div class="site-heading">
+							<h1>{{blog.name}}</h1>
+							<span class="subheading">{{blog.discription}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-md-10 mx-auto">
+					{% block content %}{% endblock %}
+				</div>
+			</div>
+		</div>
+		
+		<hr>
+
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-md-10 mx-auto">
+						<ul class="list-inline text-center">
+							<li class="list-inline-item">
+								<a href="#">
+									<span class="fa-stack fa-lg">
+										<i class="fa fa-circle fa-stack-2x"></i>
+										<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+									</span>
+								</a>
+							</li>
+							<li class="list-inline-item">
+								<a href="#">
+									<span class="fa-stack fa-lg">
+										<i class="fa fa-circle fa-stack-2x"></i>
+										<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+									</span>
+								</a>
+							</li>
+						</ul>
+						<p class="copyright text-muted">Copyright &copy; {{blog.author}} 2017</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>		<script src="static/js/clean-blog.min.js"></script>
+	</body>
+</html>
