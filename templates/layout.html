@@ -25,7 +25,7 @@
 		{% endif %}
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-		<link rel="stylesheet" href="static/css/clean-blog.min.css">
+		<link rel="stylesheet" href="{{blog.url}}/static/css/clean-blog.min.css">
 
 	</head>
 	<body>
@@ -49,14 +49,24 @@
 			</div>
 		</nav>
 
-		<header class="masthead" style="background-image: url('static/img/bg.jpg')">
+		<header class="masthead" style="background-image: url('{{blog.url}}/static/img/bg.jpg')">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8 col-md-10 mx-auto">
+						{% if is_article %}
+						<div class="post-heading">
+							<h1>{{article.title}}</h1>
+							<h2 class="subheading">{{article.discription}}</h2>
+							<span class="meta">Posted by
+								  <a href="#">{{article.author}}</a>
+							on {{article.date}}</span>
+						</div>
+						{% else %}
 						<div class="site-heading">
 							<h1>{{blog.name}}</h1>
 							<span class="subheading">{{blog.discription}}</span>
 						</div>
+						{% endif %}
 					</div>
 				</div>
 			</div>
