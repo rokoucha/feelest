@@ -8,14 +8,11 @@ import controller
 config = configparser.ConfigParser()
 config.read('config/feelest.ini')
 
-system = config["system"]
-
 app = Flask("feelest")
 
 @app.route('/')
 def index():
-    articles = controller.get_articles("database/"+system["dbname"],system["time_format"])
-
+    articles = controller.get_articles(config)
     return render_template('index.html',blog=config["blog"],articles=articles)
 
 if __name__ == '__main__':
