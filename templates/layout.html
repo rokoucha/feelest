@@ -7,21 +7,21 @@
 		{% if is_article %}
 		<meta property="og:title" content="{{article.title}}">
 		<meta property="og:type" content="article">
-		<meta property="og:description" content="{{article.discription}}}" >
+		<meta property="og:description" content="{{article.discription}}" >
 		<meta property="og:url" content="{{article.url}}">
 		{% else %}
-		<meta property="og:title" content="{{blog.name}}">
+		<meta property="og:title" content="{{blog.title}}">
 		<meta property="og:type" content="blog">
-		<meta property="og:description" content="{{blog.discription}}}" >
+		<meta property="og:description" content="{{blog.discription}}" >
 		<meta property="og:url" content="{{blog.url}}">
 		{% endif %}
-		<meta property="og:site.name" content="{{blog.name}}">
+		<meta property="og:site.name" content="{{blog.title}}">
 		<meta property="og:image" content="{{blog.favicon}}">
 		<meta property="og:locale" content="{{blog.lang}}">
 		{% if is_article %}
-		<title>{{ article.title }} - {{blog.name}}</title>
+		<title>{{ article.title }} - {{blog.title}}</title>
 		{% else %}
-		<title>{{blog.name}}</title>
+		<title>{{blog.title}}</title>
 		{% endif %}
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
@@ -31,7 +31,7 @@
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
 			<div class="container">
-				<a class="navbar-brand" href="{{blog.url}}">{{blog.name}}</a>
+				<a class="navbar-brand" href="{{blog.url}}">{{blog.title}}</a>
 				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 				Menu
 				<i class="fa fa-bars"></i>
@@ -63,7 +63,7 @@
 						</div>
 						{% else %}
 						<div class="site-heading">
-							<h1>{{blog.name}}</h1>
+							<h1>{{blog.title}}</h1>
 							<span class="subheading">{{blog.discription}}</span>
 						</div>
 						{% endif %}
