@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import controller
 
 config = configparser.ConfigParser()
-config.read('config/feelest.ini')
+config.read('config/feelest.ini', encoding="utf-8")
 
 app = Flask("feelest")
 
