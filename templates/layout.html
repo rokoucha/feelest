@@ -7,12 +7,12 @@
 		{% if is_article %}
 		<meta property="og:title" content="{{article.title}}">
 		<meta property="og:type" content="article">
-		<meta property="og:description" content="{{article.discription}}" >
+		<meta property="og:description" content="{{article.description}}" >
 		<meta property="og:url" content="{{article.url}}">
 		{% else %}
 		<meta property="og:title" content="{{blog.title}}">
 		<meta property="og:type" content="blog">
-		<meta property="og:description" content="{{blog.discription}}" >
+		<meta property="og:description" content="{{blog.description}}" >
 		<meta property="og:url" content="{{blog.url}}">
 		{% endif %}
 		<meta property="og:site.name" content="{{blog.title}}">
@@ -56,7 +56,7 @@
 						{% if is_article %}
 						<div class="post-heading">
 							<h1>{{article.title}}</h1>
-							<h2 class="subheading">{{article.discription}}</h2>
+							<h2 class="subheading">{{article.description}}</h2>
 							<span class="meta">Posted by
 								  <a href="#">{{article.author}}</a>
 							on {{article.date}}</span>
@@ -64,7 +64,7 @@
 						{% else %}
 						<div class="site-heading">
 							<h1>{{blog.title}}</h1>
-							<span class="subheading">{{blog.discription}}</span>
+							<span class="subheading">{{blog.description}}</span>
 						</div>
 						{% endif %}
 					</div>
