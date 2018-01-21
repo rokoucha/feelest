@@ -22,9 +22,9 @@ def article(id):
         article_data = dict(controller.get_article(id, config))
         return render_template("article.tmpl", blog=config["blog"], article=article_data, is_article=True)
 
-@app.route("/login")
+@app.route("/login/twitter")
 def login():
-    auth = tweepy.OAuthHandler(config["oauth"]["consumer_key"], config["oauth"]["consumer_secret"], config["blog"]["url"]+"/login/callback")
+    auth = tweepy.OAuthHandler(config["oauth"]["consumer_key"], config["oauth"]["consumer_secret"], config["blog"]["url"]+"/login/twitter/callback")
     redirect_url = auth.get_authorization_url()
     session["request_token"] = auth.request_token
     return redirect(redirect_url)
