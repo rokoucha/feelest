@@ -24,7 +24,7 @@ def article(id):
 
 @app.route('/login')
 def login():
-    auth = tweepy.OAuthHandler(config["consumer_key"], config["consumer_secret"], config["url"]+"/login/callback")
+    auth = tweepy.OAuthHandler(config["oauth"]["consumer_key"], config["oauth"]["consumer_secret"], config["blog"]["url"]+"/login/callback")
     redirect_url = auth.get_authorization_url()
     session['request_token'] = auth.request_token
     return redirect(redirect_url)
