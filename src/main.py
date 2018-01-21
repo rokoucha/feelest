@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import configparser
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, redirect, session
 import tweepy
 
 import controller
@@ -24,11 +24,10 @@ def article(id):
 
 @app.route('/login')
 def login():
-    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET, CALLBACK_URL)
+    auth = tweepy.OAuthHandler(config["consumer_key"], config["consumer_secret"], config["url"]+"/login/callback")
     redirect_url = auth.get_authorization_url()
     session['request_token'] = auth.request_token
     return redirect(redirect_url)
 
 if __name__ == '__main__':
-    
     app.run(host='0.0.0.0')
