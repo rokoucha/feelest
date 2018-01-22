@@ -2,7 +2,7 @@
 
 from configparser import ConfigParser
 import sqlite3
-from flask import Flask, render_template, redirect, request, session
+from flask import abort, Flask, render_template, redirect, request, session
 from flask_httpauth import HTTPDigestAuth
 import tweepy
 
@@ -33,11 +33,13 @@ def article(articleid):
     """
     Return article page
     """
-    if articles.exist_article(db=DB, articleid=articleid, invisible=True):
+    
+    if articles.exist_article(db=DB, articleid=articleid, invisible=True) and articleid.isdigit():
         article_data = dict(
             articles.get_article(db=DB, articleid=articleid, invisible=True, timeformat=CONFIG["system"]["time_format"], url=CONFIG["blog"]["url"])
         )
         return render_template("article.tmpl", blog=CONFIG["blog"], article=article_data, is_article=True)
+    abort(404)
 
 @APP.route("/login", methods=["GET", "POST"])
 def login():
