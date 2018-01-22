@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import configparser
-from flask import Flask, render_template, redirect, session
+from flask import Flask, render_template, redirect, request, session
+from flask_httpauth import HTTPDigestAuth
+import sqlite3
 import tweepy
 
 import controller
@@ -22,12 +24,18 @@ def article(id):
         article_data = dict(controller.get_article(id=id, invisible=True, config=config))
         return render_template("article.tmpl", blog=config["blog"], article=article_data, is_article=True)
 
-@app.route("/login/twitter")
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    auth = tweepy.OAuthHandler(config["oauth"]["consumer_key"], config["oauth"]["consumer_secret"], config["blog"]["url"]+"/login/twitter/callback")
-    redirect_url = auth.get_authorization_url()
-    session["request_token"] = auth.request_token
-    return redirect(redirect_url)
+    if request.method == "POST":
+        if config["system"]["authenticator"] == "digest":
+            session["username"] = request.form["username"]
+            return redirect(request.referrer or "/")
+    return render_template("login.tmpl")
+
+@app.route("/logout")
+def logout():
+    session.pop("session_token", None)
+    return redirect(request.referrer or "/")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
