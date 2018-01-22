@@ -37,6 +37,6 @@ def exist_article(db, articleid, invisible):
     Check exist article in db
     """
 
-    sql = "select * from articles where id=? and invisible=?"
+    exist = "select id from articles where id=? and invisible=?"
 
-    return True if db.execute(sql, (articleid, 1 if invisible else 0)) != "" else False
+    return articleid in [str(row[0]) for row in db.execute(exist, (articleid, 1 if invisible else 0))]
