@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from configparser import ConfigParser
+import sqlite3
 from flask import Flask, render_template, redirect, request, session
 from flask_httpauth import HTTPDigestAuth
-import sqlite3
 import tweepy
 
 import articles
@@ -14,25 +14,29 @@ CONFIG.read("config/feelest.ini", encoding="utf-8")
 
 APP = Flask("feelest")
 
-dbconnector = sqlite3.connect("database/" + CONFIG["system"]["dbname"])
-dbcursor = dbconnector.cursor()
-dbconnector.row_factory = sqlite3.Row
+DBCONN = sqlite3.connect("database/" + CONFIG["system"]["dbname"])
+DB = DBCONN.cursor()
+DBCONN.row_factory = sqlite3.Row
 
 @APP.route("/")
 def index():
     """
     Return index page
     """
-    article_list = articles.get_articles(invisible=True, config=CONFIG)
+    article_list = articles.get_articles(
+        DB=DB, invisible=True, timeformat=CONFIG["system"]["time_fomart"], url=CONFIG["blog"]["url"]
+    )
     return render_template("index.tmpl", blog=CONFIG["blog"], articles=article_list)
 
 @APP.route("/article/<string:id>")
-def article(id):
+def article(articleid):
     """
     Return article page
     """
-    if articles.exist_article(id=id, invisible=True, config=CONFIG):
-        article_data = dict(articles.get_article(id=id, invisible=True, config=CONFIG))
+    if articles.exist_article(DB=DB, articleid=articleid, invisible=True):
+        article_data = dict(
+            articles.get_article(DB=DB, articleid=articleid, invisible=True, timeformat=CONFIG["system"]["time_fomart"], url=CONFIG["blog"]["url"])
+        )
         return render_template("article.tmpl", blog=CONFIG["blog"], article=article_data, is_article=True)
 
 @APP.route("/login", methods=["GET", "POST"])

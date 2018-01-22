@@ -1,50 +1,42 @@
-import mistune
-import sqlite3
-import time
 from datetime import datetime
+import mistune
 
-def get_articles(invisible, config):
-    dbname = "database/" + config["system"]["dbname"]
-    url = config["blog"]["url"]
-    time_format = config["system"]["time_format"]
-
-    dbconn = sqlite3.connect(dbname)
-    db = dbconn.cursor()
-    db.row_factory = sqlite3.Row
-
+def get_articles(DB, invisible, timeformat, url):
+    """
+    Get article list from DB
+    """
     articles = []
 
-    for rowt in list(db.execute("select * from articles where invisible=? order by unixtime DESC", (str(1 if invisible else 0)))):
-        row = dict(rowt)
-        row["date"] = datetime.fromtimestamp(row["unixtime"]).strftime(time_format)
-        row["url"] = url + "/article/" + str(row["id"])
+    sql = "select * from articles where invisible=? order by unixtime DESC"
+
+    for row in list(DB.execute(sql, (str(1 if invisible else 0)))):
+        article = dict(row)
+        article["date"] = datetime.fromtimestamp(row["unixtime"]).strftime(timeformat)
+        article["url"] = url + "/article/" + str(row["id"])
         articles.append(row)
 
     return articles
 
-def get_article(id, invisible, config):
-    dbname = "database/" + config["system"]["dbname"]
-    url = config["blog"]["url"]
-    time_format = config["system"]["time_format"]
-
-    dbconn = sqlite3.connect(dbname)
-    db = dbconn.cursor()
-    db.row_factory = sqlite3.Row
-
+def get_article(DB, articleid, invisible, timeformat, url):
+    """
+    Get article use article id from DB
+    """
     article = {}
 
-    for row in list(db.execute("select * from articles where id=? and invisible=?", (id, str(1 if invisible else 0)))):
-        article = dict (row)
-        article["date"] = datetime.fromtimestamp(article["unixtime"]).strftime(time_format)
+    sql = "select * from articles where id=? and invisible=?"
+
+    for row in list(DB.execute(sql, (articleid, str(1 if invisible else 0)))):
+        article = dict(row)
+        article["date"] = datetime.fromtimestamp(article["unixtime"]).strftime(timeformat)
         article["url"] = url + "/article/" + str(article["id"])
 
     return article
 
-def exist_article(id, invisible, config):
-    dbname = "database/" + config["system"]["dbname"]
+def exist_article(DB, articleid, invisible):
+    """
+    Check exist article in DB
+    """
 
-    dbconn = sqlite3.connect(dbname)
-    db = dbconn.cursor()
-    db.row_factory = sqlite3.Row
+    sql = "select * from articles where id=? and invisible=?"
 
-    return True if db.execute("select * from articles where id=? and invisible=?", (id, 1 if invisible else 0)) != "" else False
+    return True if DB.execute(sql, (articleid, 1 if invisible else 0)) != "" else False
