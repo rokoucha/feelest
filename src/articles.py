@@ -1,42 +1,42 @@
 from datetime import datetime
 import mistune
 
-def get_articles(DB, invisible, timeformat, url):
+def get_articles(db, invisible, timeformat, url):
     """
-    Get article list from DB
+    Get article list from db
     """
     articles = []
 
-    sql = "select * from articles where invisible=? order by unixtime DESC"
+    getarticle = "select * from articles where invisible=? order by unixtime DESC"
 
-    for row in list(DB.execute(sql, (str(1 if invisible else 0)))):
+    for row in db.execute(getarticle, (str(1 if invisible else 0))):
         article = dict(row)
-        article["date"] = datetime.fromtimestamp(row["unixtime"]).strftime(timeformat)
-        article["url"] = url + "/article/" + str(row["id"])
-        articles.append(row)
+        article["date"] = datetime.fromtimestamp(article["unixtime"]).strftime(timeformat)
+        article["url"] = url + "/article/" + str(article["id"])
+        articles.append(article)
 
     return articles
 
-def get_article(DB, articleid, invisible, timeformat, url):
+def get_article(db, articleid, invisible, timeformat, url):
     """
-    Get article use article id from DB
+    Get article use article id from db
     """
     article = {}
 
-    sql = "select * from articles where id=? and invisible=?"
+    getarticle = "select * from articles where id=? and invisible=?"
 
-    for row in list(DB.execute(sql, (articleid, str(1 if invisible else 0)))):
+    for row in db.execute(getarticle, (articleid, str(1 if invisible else 0))):
         article = dict(row)
         article["date"] = datetime.fromtimestamp(article["unixtime"]).strftime(timeformat)
         article["url"] = url + "/article/" + str(article["id"])
 
     return article
 
-def exist_article(DB, articleid, invisible):
+def exist_article(db, articleid, invisible):
     """
-    Check exist article in DB
+    Check exist article in db
     """
 
     sql = "select * from articles where id=? and invisible=?"
 
-    return True if DB.execute(sql, (articleid, 1 if invisible else 0)) != "" else False
+    return True if db.execute(sql, (articleid, 1 if invisible else 0)) != "" else False

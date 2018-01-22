@@ -15,8 +15,8 @@ CONFIG.read("config/feelest.ini", encoding="utf-8")
 APP = Flask("feelest")
 
 DBCONN = sqlite3.connect("database/" + CONFIG["system"]["dbname"])
-DB = DBCONN.cursor()
 DBCONN.row_factory = sqlite3.Row
+DB = DBCONN.cursor()
 
 @APP.route("/")
 def index():
@@ -24,18 +24,18 @@ def index():
     Return index page
     """
     article_list = articles.get_articles(
-        DB=DB, invisible=True, timeformat=CONFIG["system"]["time_fomart"], url=CONFIG["blog"]["url"]
+        db=DB, invisible=True, timeformat=CONFIG["system"]["time_format"], url=CONFIG["blog"]["url"]
     )
     return render_template("index.tmpl", blog=CONFIG["blog"], articles=article_list)
 
-@APP.route("/article/<string:id>")
+@APP.route("/article/<string:articleid>")
 def article(articleid):
     """
     Return article page
     """
-    if articles.exist_article(DB=DB, articleid=articleid, invisible=True):
+    if articles.exist_article(db=DB, articleid=articleid, invisible=True):
         article_data = dict(
-            articles.get_article(DB=DB, articleid=articleid, invisible=True, timeformat=CONFIG["system"]["time_fomart"], url=CONFIG["blog"]["url"])
+            articles.get_article(db=DB, articleid=articleid, invisible=True, timeformat=CONFIG["system"]["time_format"], url=CONFIG["blog"]["url"])
         )
         return render_template("article.tmpl", blog=CONFIG["blog"], article=article_data, is_article=True)
 
