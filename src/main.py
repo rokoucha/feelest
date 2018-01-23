@@ -33,7 +33,6 @@ def article(articleid):
     """
     Return article page
     """
-    
     if articles.exist_article(db=DB, articleid=articleid, invisible=True) and articleid.isdigit():
         article_data = dict(
             articles.get_article(db=DB, articleid=articleid, invisible=True, timeformat=CONFIG["system"]["time_format"], url=CONFIG["blog"]["url"])
