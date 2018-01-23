@@ -18,6 +18,8 @@ DBCONN = sqlite3.connect("database/" + CONFIG["system"]["dbname"])
 DBCONN.row_factory = sqlite3.Row
 DB = DBCONN.cursor()
 
+debug = True if CONFIG["system"]["debug"] == "True" else False
+
 @APP.route("/")
 def index():
     """
